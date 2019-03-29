@@ -17,29 +17,29 @@ Class to run staircase procedure.
 class staircase_helper:
     
     def __init__(self, dv0 = 1, conv_p = .75, stepsize = (3), reversals = [10]):
-        
-        # Save inputs
+        # Save space writing s instead of self
         s = self
-        s.dv = dv0              # Initial value
-        s.p = conv_p            # Converge on this probability
-        s.reversals = reversals
-        s.stepsize = stepsize   # Step size
+
+        # Save inputs
+        s.dv = dv0                      # Initial value
+        s.p = conv_p                    # Converge on this probability
+        s.reversals = reversals         # Number of reversals to run
+        s.stepsize = stepsize           # Step size
                 
-        # Calculate stuff
-        s.factor = s.p / (1 - s.p) # Calculate factor
+        s.factor = s.p / (1 - s.p)      # Calculate adjustment factor
         
         # Trackers
-        s.dvs = []              # Track all dvs values
-        s.dvs_on_rev = []       # Track dvs values on reversals
-        s.trial_number = 0      # Trial counter
-        s.revn = 0              # Reversal counter
+        s.dvs = []                      # Track all dvs values
+        s.dvs_on_rev = []               # Track dvs values on reversals
+        s.trial_number = 0              # Trial counter
+        s.revn = 0                      # Reversal counter
         
         # Indicators
-        s.staircase_over = False    # Is the staircase over?
-        s.first_trial = True        # Is this the first trial?
+        s.staircase_over = False        # Is the staircase over?
+        s.first_trial = True            # Is this the first trial?
         
         # Last ans trackers
-        s.last_answers = [None, None, None, None]
+        s.last_answers = [None, None, None, None, None]
         
     def new_trial(self, is_correct):
         s = self
