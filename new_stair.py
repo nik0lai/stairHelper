@@ -41,7 +41,8 @@ class staircase_helper:
         s.first_trial = True            # Is this the first trial?
         
         # Last ans trackers
-        s.last_answers = [None, None, None, None, None]
+        s.last_answers = [None] * stepdown_rule
+        s.previous_is_corect = None
         
     def new_trial(self, is_correct):
         s = self
