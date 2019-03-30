@@ -69,8 +69,9 @@ class staircase_helper:
                     s.dvs_on_rev.append(s.dv)
                     
             # Update dv ----------------------
-             if is_correct and (s.last_answers == [True] * s.stepdown_rule):
-                 s.dv -= (s.stepsize / float(s.factor))
+             if is_correct:
+                 if (s.last_answers == [True] * s.stepdown_rule):
+                     s.dv -= (s.stepsize / float(s.factor))
              else:
                  s.dv += s.stepsize
 
