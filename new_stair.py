@@ -82,7 +82,15 @@ class staircase_helper:
              s.first_trial = False
              # Update last correct/incorrect answer
              s.previous_is_corect = is_correct
-
+     
+    def get_treshold(self):
+        # Save space writing s instead of self
+        s = self
+        # Return treshold only if staircase is over
+        if s.staircase_over:
+            return np.mean(s.dvs_on_rev)
+        else:
+            print '\n\nStaircase is not over yet.\n' 
 
 
 
