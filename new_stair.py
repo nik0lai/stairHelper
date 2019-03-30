@@ -9,7 +9,8 @@ Class to run staircase procedure.
 """
 
 # Modules ----------------
-
+import numpy as np
+import matplotlib.pyplot as plt
 
 # Class definition --------
 
