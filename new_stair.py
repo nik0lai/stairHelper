@@ -45,19 +45,51 @@ class staircase_helper:
         s.previous_is_corect = None
         
     def new_trial(self, is_correct):
+        # Save space writing s instead of self
         s = self
-        
+
+        # If staircase not over ------------
         if not s.staircase_over:
+             s.trial_number += 1
+             s.dvs.append(s.dv)
+             s.last_answers = [is_correct] + s.last_answers[:-1]
             
-            if not s.first_trial:
+             # If not first trial ------------
+             if not s.first_trial:
                 
-                # How many steps?
+                # Check if reversal ---------
+                if is_correct != s.previous_is_corect:
+                    s.revn  += 1
+                    reversal = True
+                else:
+                    reversal = False
+                
+                # Save dv on reversal
+                if reversal:
+                    s.dvs_on_rev.append(s.dv)
+                    
+            # Update dv ----------------------
+             if is_correct and (s.last_answers == [True] * s.stepdown_rule):
+                 s.dv -= (s.stepsize / float(s.factor))
+             else:
+                 s.dv += s.stepsize
+
+             # If max. number of reversals end staircase
+             if s.revn >= s.reversals:
+                 s.staircase_over = True
+                 
+             # First trial over
+             s.first_trial = False
+             # Update last correct/incorrect answer
+             s.previous_is_corect = is_correct
+
+
+
 
 
 test_stair = staircase_helper(dv0 = 10, conv_p=.75, stepsize=3, reversals=10)
 
-
-
+is_correct = True
 
 
 
