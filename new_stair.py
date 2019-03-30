@@ -16,7 +16,8 @@ Class to run staircase procedure.
 
 class staircase_helper:
     
-    def __init__(self, dv0 = 1, conv_p = .75, stepsize = (3), reversals = [10]):
+    def __init__(self, dv0 = 1, conv_p = .75, stepsize = (3), reversals = [10],
+                 stepdown_rule = 1):
         # Save space writing s instead of self
         s = self
 
@@ -25,6 +26,7 @@ class staircase_helper:
         s.p = conv_p                    # Converge on this probability
         s.reversals = reversals         # Number of reversals to run
         s.stepsize = stepsize           # Step size
+        s.stepdown_rule = stepdown_rule # Corrects in a row before step down
                 
         s.factor = s.p / (1 - s.p)      # Calculate adjustment factor
         
