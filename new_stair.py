@@ -91,6 +91,21 @@ class staircase_helper:
             return np.mean(s.dvs_on_rev)
         else:
             print '\n\nStaircase is not over yet.\n' 
+    
+    def plot_staircase(self):
+        # Save space writing s instead of self
+        s = self
+        
+        x = np.arange(s.trial_number) + 1
+        y = s.dvs
+        
+        plt.plot(x, y)
+        plt.xlim(min(x), max(x))
+        plt.ylim(min(y), max(y))
+        plt.ylabel('Dv')
+        plt.xlabel('Trial no.')
+        
+        plt.show()
 
 
 
