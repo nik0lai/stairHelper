@@ -118,4 +118,15 @@ is_correct = True
 
 
 
-        
+def main():
+    trials = np.random.randint(0, 2, 50)
+#    staircase_helper = staircase_helper()
+    for trial in trials:
+        staircase_helper.new_trial(trial)
+        if staircase_helper.staircase_over:
+            break
+    print staircase_helper.get_treshold()
+    staircase_helper.plot_staircase()
+     
+if __name__ == '__main__':
+    main()
