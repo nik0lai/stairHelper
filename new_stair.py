@@ -36,6 +36,7 @@ class staircase_helper:
         s.dvs_on_rev = []               # Track dvs values on reversals
         s.trial_number = 0              # Trial counter
         s.revn = 0                      # Reversal counter
+        s.reversal_on_trial = []        # Reversal trial
         
         # Indicators
         s.staircase_over = False        # Is the staircase over?
@@ -62,6 +63,7 @@ class staircase_helper:
                 if is_correct != s.previous_is_corect:
                     s.revn  += 1
                     reversal = True
+                    s.reversal_on_trial.append(s.trial_number)
                 else:
                     reversal = False
                 
