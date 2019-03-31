@@ -111,14 +111,34 @@ class staircase_helper:
         
         plt.show()
 
-
-
-
-test_stair = staircase_helper(dv0 = 10, conv_p=.75, stepsize=3, reversals=10)
-
-is_correct = True
-
-
+    def export_staircase(self, path = ''):
+        # Save space writing s instead of self
+        s = self
+        
+        # Create vector indicating reversal on trials
+        reversal_trials     = np.zeros(s.trial_number)
+        s.reversal_on_trial = np.array(s.reversal_on_trial)-1
+        reversal_trials[s.reversal_on_trial] = 1
+        
+        # Header for dataframe
+        header = np.array(['trial_no', 'dvs', 'reversal_trial', 'conv_p', 
+                           'factor', 'reversals', 'stepsize', 'stepdown_rule'])
+        # Stack dataframe
+        to_export = np.vstack((np.arange(s.trial_number) + 1, 
+                               s.dvs,
+                               reversal_trials,
+                               [s.p] * s.trial_number,
+                               [s.factor] * s.trial_number,
+                               [s.reversals] * s.trial_number,
+                               [s.stepsize] * s.trial_number,
+                               [s.stepdown_rule] * s.trial_number)).T
+        # Add header                            
+        to_export = np.vstack((np.array(header), to_export))
+        
+        if path == '':
+            return to_export
+        else:
+            np.savetxt(path, to_export, delimiter=",", fmt="%s")
 
 def main():
     trials = np.random.randint(0, 2, 50)
