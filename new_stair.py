@@ -1,9 +1,18 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-Class to run staircase procedure.
+Helper class to run staircase. This is a modification of Sam Mathias' 
+Kaernbach's (1991) adaptive staircase procedure in Python 
+(https://gist.github.com/sammosummo/71bcde28572937380785).
 
+The modifications include the option of using any step down rule and export 
+of the staircase data.
 
+Be aware that although virtually any percentage con be aimed and whichever
+stepdown rule can be used, there is research showing that the final converged
+accuracy percentage depends greatly on the initial value of the dv, the 
+step size, the number of reversals and the stepdown rule. Not always resulting
+in the aimed accurace percentage.
 
 @author: Nicolas Sanchez-Fuenzalida
 """
@@ -12,12 +21,10 @@ Class to run staircase procedure.
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Class definition --------
-
-
+# Set class --------
 class staircase_helper:
     
-    def __init__(self, dv0 = 1, conv_p = .75, stepsize = 3, reversals = 10,
+    def __init__(self, dv0 = 1, conv_p = .75, stepsize = 3, reversals = 20,
                  stepdown_rule = 1):
         # Save space writing s instead of self
         s = self
@@ -73,9 +80,11 @@ class staircase_helper:
                     
             # Update dv ----------------------
              if is_correct:
+                 # Correct, decrease signal
                  if (s.last_answers == [True] * s.stepdown_rule):
                      s.dv -= (s.stepsize / float(s.factor))
              else:
+                 # Incorrect, increase signal
                  s.dv += s.stepsize
 
              # If max. number of reversals end staircase
@@ -99,10 +108,10 @@ class staircase_helper:
     def plot_staircase(self):
         # Save space writing s instead of self
         s = self
-        
+        # Set number of trials as x axis and dv values on y axis
         x = np.arange(s.trial_number) + 1
         y = s.dvs
-        
+        # Plot
         plt.plot(x, y)
         plt.xlim(min(x), max(x))
         plt.ylim(min(y), max(y))
