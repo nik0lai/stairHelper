@@ -140,15 +140,18 @@ class staircase_helper:
         else:
             np.savetxt(path, to_export, delimiter=",", fmt="%s")
 
+# Define routine to test script. If the script is not imported but executed
+# the folowwing routine will be executed.
 def main():
     trials = np.random.randint(0, 2, 50)
-#    staircase_helper = staircase_helper()
+    Staircase_helper = staircase_helper()
     for trial in trials:
-        staircase_helper.new_trial(trial)
-        if staircase_helper.staircase_over:
+        Staircase_helper.new_trial(trial)
+        if Staircase_helper.staircase_over:
             break
-    print staircase_helper.get_treshold()
-    staircase_helper.plot_staircase()
-     
+    print 'Treshold: ' + str(Staircase_helper.get_treshold())
+    print Staircase_helper.export_staircase()
+    Staircase_helper.plot_staircase()
+# If script executed run main()
 if __name__ == '__main__':
     main()
