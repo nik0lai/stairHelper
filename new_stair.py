@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 
 class staircase_helper:
     
-    def __init__(self, dv0 = 1, conv_p = .75, stepsize = (3), reversals = [10],
+    def __init__(self, dv0 = 1, conv_p = .75, stepsize = 3, reversals = 10,
                  stepdown_rule = 1):
         # Save space writing s instead of self
         s = self
