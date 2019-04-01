@@ -44,7 +44,7 @@ class staircaseHelper:
         s.trial_number = 0              # Trial counter
         s.revn = 0                      # Reversal counter
         s.reversal_on_trial = []        # Reversal trial
-        
+        s.is_correct_track = []         # Track corr/incorr booleans
         # Indicators
         s.staircase_over = False        # Is the staircase over?
         s.first_trial = True            # Is this the first trial?
@@ -63,6 +63,7 @@ class staircaseHelper:
              s.trial_number += 1
              s.dvs.append(s.dv)
              s.last_answers = [is_correct] + s.last_answers[:-1]
+             s.is_correct_track.append(is_correct)
             
              # If not first trial ------------
              if not s.first_trial:
@@ -137,17 +138,19 @@ class staircaseHelper:
         reversal_trials[s.reversal_on_trial] = 1
         
         # Header for dataframe
-        header = np.array(['trial_no', 'dvs', 'reversal_trial', 'conv_p', 
-                           'factor', 'reversals', 'stepsize', 'stepdown_rule'])
+        header = np.array(['sub_number', 'trial_no', 'dvs', 'reversal_trial', 'conv_p', 
+                           'factor', 'reversals', 'stepsize', 'stepdown_rule', 'accuracy'])
         # Stack dataframe
-        to_export = np.vstack((np.arange(s.trial_number) + 1, 
+        to_export = np.vstack(([subNum] * s.trial_number,
+                               np.arange(s.trial_number) + 1, 
                                s.dvs,
                                reversal_trials,
                                [s.p] * s.trial_number,
                                [s.factor] * s.trial_number,
                                [s.reversals] * s.trial_number,
                                [s.stepsize] * s.trial_number,
-                               [s.stepdown_rule] * s.trial_number)).T
+                               [s.stepdown_rule] * s.trial_number,
+                               [np.mean(s.is_correct_track)] * s.trial_number)).T
         # Add header                            
         to_export = np.vstack((np.array(header), to_export))
         
