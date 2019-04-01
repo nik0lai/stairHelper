@@ -2,17 +2,15 @@
 # -*- coding: utf-8 -*-
 """
 Helper class to run staircase. This is a modification of Sam Mathias' 
-Kaernbach's (1991) adaptive staircase procedure in Python 
+Kaernbach's (1991) adaptive staircase procedure 
 (https://gist.github.com/sammosummo/71bcde28572937380785).
 
-The modifications include the option of using any step down rule and export 
-of the staircase data.
+Now it's possible to use any step down rule and to export of the 
+staircase data.
 
-Be aware that although virtually any percentage con be aimed and whichever
-stepdown rule can be used, there is research showing that the final converged
-accuracy percentage depends greatly on the initial value of the dv, the 
-step size, the number of reversals and the stepdown rule. Not always resulting
-in the aimed accurace percentage.
+BE AWARE,  although you can aim to virtually any accuracy percentage, 
+the final accuracy rate depends largely on the dv initial value, the 
+step size, the number of reversals and the step-down rule.
 
 @author: Nicolas Sanchez-Fuenzalida
 """
@@ -22,8 +20,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Set class --------
-class staircase_helper:
+class staircaseHelper:
     
+    # Initialize staircase
     def __init__(self, dv0 = 1, conv_p = .75, stepsize = 3, reversals = 20,
                  stepdown_rule = 1):
         # Save space writing s instead of self
@@ -53,6 +52,7 @@ class staircase_helper:
         s.last_answers = [None] * stepdown_rule
         s.previous_is_corect = None
         
+    # Advance trial (boolean)
     def new_trial(self, is_correct):
         # Save space writing s instead of self
         s = self
@@ -95,7 +95,9 @@ class staircase_helper:
              s.first_trial = False
              # Update last correct/incorrect answer
              s.previous_is_corect = is_correct
-     
+    
+    # Only when staircase is over (max. number of reversals reached), get
+    # staircased treshold
     def get_treshold(self):
         # Save space writing s instead of self
         s = self
@@ -105,6 +107,7 @@ class staircase_helper:
         else:
             print '\n\nStaircase is not over yet.\n' 
     
+    # Plot staircase evolution
     def plot_staircase(self):
         # Save space writing s instead of self
         s = self
@@ -120,6 +123,7 @@ class staircase_helper:
         
         plt.show()
 
+    # Export staircase data (if no path feeded return array)
     def export_staircase(self, path = ''):
         # Save space writing s instead of self
         s = self
@@ -153,14 +157,14 @@ class staircase_helper:
 # the folowwing routine will be executed.
 def main():
     trials = np.random.randint(0, 2, 50)
-    Staircase_helper = staircase_helper()
+    StaircaseHelper = staircaseHelper()
     for trial in trials:
-        Staircase_helper.new_trial(trial)
-        if Staircase_helper.staircase_over:
+        StaircaseHelper.new_trial(trial)
+        if StaircaseHelper.staircase_over:
             break
-    print 'Treshold: ' + str(Staircase_helper.get_treshold())
-    print Staircase_helper.export_staircase()
-    Staircase_helper.plot_staircase()
+    print 'Treshold: ' + str(StaircaseHelper.get_treshold())
+    print StaircaseHelper.export_staircase()
+    StaircaseHelper.plot_staircase()
 # If script executed run main()
 if __name__ == '__main__':
     main()
