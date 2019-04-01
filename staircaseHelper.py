@@ -112,7 +112,7 @@ class staircaseHelper:
             print '\n\nStaircase is not over yet.\n' 
     
     # Plot staircase evolution
-    def plot_staircase(self):
+    def plot_staircase(self, path = None):
         # Save space writing s instead of self
         s = self
         # Set number of trials as x axis and dv values on y axis
@@ -125,7 +125,13 @@ class staircaseHelper:
         plt.ylabel('Dv')
         plt.xlabel('Trial no.')
         
-        plt.show()
+        if s.staircase_over:
+            plt.hlines(s.get_treshold(), min(x), max(x), 'r')
+        
+        if path:
+            plt.savefig(path)
+        else:
+            plt.show()
 
     # Export staircase data (if no path feeded return array)
     def export_staircase(self, path = ''):
