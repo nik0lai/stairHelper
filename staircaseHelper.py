@@ -134,7 +134,7 @@ class staircaseHelper:
             plt.show()
 
     # Export staircase data (if no path feeded return array)
-    def export_staircase(self, path = ''):
+    def export_staircase(self, subNum = '', path = ''):
         # Save space writing s instead of self
         s = self
         
