@@ -12,6 +12,11 @@ BE AWARE,  although you can aim to virtually any accuracy percentage,
 the final accuracy rate depends largely on the dv initial value, the 
 step size, the number of reversals and the step-down rule.
 
+The script is working with the following library:
+- Python         2.7.15 (packaged by conda-forge)
+- numpy          1.15.4
+- matplotlib     2.2.3
+
 @author: Nicolas Sanchez-Fuenzalida
 """
 
