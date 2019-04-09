@@ -133,10 +133,10 @@ class staircaseHelper:
         if s.staircase_over:
             plt.hlines(s.get_treshold(), min(x), max(x), 'r')
         
-        if path:
-            plt.savefig(path)
-        else:
+        if not path:
             plt.show()
+        else:
+            plt.savefig(path)
 
     # Export staircase data (if no path feeded return array)
     def export_staircase(self, subNum = '', path = ''):
