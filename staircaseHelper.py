@@ -139,7 +139,7 @@ class staircaseHelper:
             plt.savefig(path)
 
     # Export staircase data (if no path feeded return array)
-    def export_staircase(self, subNum = '', path = ''):
+    def export_staircase(self, subNum = None, path = None):
         # Save space writing s instead of self
         s = self
         
@@ -165,7 +165,7 @@ class staircaseHelper:
         # Add header                            
         to_export = np.vstack((np.array(header), to_export))
         
-        if path == '':
+        if not path:
             return to_export
         else:
             np.savetxt(path, to_export, delimiter=",", fmt="%s")
