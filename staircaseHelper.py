@@ -29,7 +29,7 @@ class staircaseHelper:
     
     # Initialize staircase
     def __init__(self, dv0 = 1, conv_p = .75, stepsize = 3, reversals = 20,
-                 stepdown_rule = 1, min_correction = None):
+                 stepdown_rule = 1, min_corr = None, max_corr = None):
         # Save space writing s instead of self
         s = self
 
@@ -39,10 +39,30 @@ class staircaseHelper:
         s.reversals = reversals         # Number of reversals to run
         s.stepsize = stepsize           # Step size
         s.stepdown_rule = stepdown_rule # Corrects in a row before step down
-        s.min = min_correction          # If a number, prevent from going lower
-                
         s.factor = s.p / (1 - s.p)      # Calculate adjustment factor
         
+        # Min max corr
+        # Check min and max values feeded
+        if isinstance(min_corr, (int, float)) and isinstance(max_corr, (int, float)):
+            if not min_corr < max_corr:
+                raise Exception('max_corr has to be greater than min_corr. %d is not greater than %d.' % (max_corr, min_corr))
+        
+        # Min value correction. Activate if min_corr is a number
+        if isinstance(min_corr, (int, float)):
+            s.corr_min = True
+            s.min_edge = min_corr
+        else:
+            s.corr_min = False
+            s.min_edge = min_corr
+        
+        # Max value correction. Activate if min_corr is a number
+        if isinstance(max_corr, (int, float)):
+            s.corr_max = True
+            s.max_edge = max_corr
+        else:
+            s.corr_max = False
+            s.max_edge = max_corr
+
         # Trackers
         s.dvs = []                      # Track all dvs values
         s.dvs_on_rev = []               # Track dvs values on reversals
@@ -94,8 +114,11 @@ class staircaseHelper:
                  # Incorrect, increase signal
                  s.dv += s.stepsize
              # If prevent from going lower than min
-             if s.dv < s.min:
-                 s.dv = s.min
+             if s.corr_min:
+                 s.dv = s.min_edge if (s.dv < s.min_edge) else s.dv
+             # If prevent from going higher than max
+             if s.corr_max:
+                 s.dv = s.max_edge if (s.dv > s.max_edge) else s.dv
              # If max. number of reversals end staircase
              if s.revn >= s.reversals:
                  s.staircase_over = True
